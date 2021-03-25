@@ -21,6 +21,7 @@ public class ResetBall : MonoBehaviour
 
     public void BallReset()
     {
+        //reset variables if this function is called
         _ballRB.velocity = Vector3.zero;
         _ballRB.angularVelocity = Vector3.zero;
         _ballTrans.position =  _startPos;
@@ -30,6 +31,7 @@ public class ResetBall : MonoBehaviour
     }
 
     void Update(){
+        //call ball reset if the ball falls out of bounds
         if(_ballTrans.position.y -_camTrans.position.y  < _maxDrop){
             BallReset();
         }

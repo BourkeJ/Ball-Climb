@@ -16,25 +16,25 @@ public class CameraMovement : MonoBehaviour
     [HideInInspector] public float maxHeight;
 
 
-
-    // Start is called before the first frame update
 	private void Awake() {
 		_transform = GetComponent<Transform>();
 		_camera = GetComponent<Camera>();
         bottomLeway = 0f;
 	}
 
-    // Update is called once per frame
     void Update()
     {
+        //check the highest point the camera has been
         if(_transform.position.y > maxHeight){
             maxHeight = _transform.position.y;
         }
 
+        //check if camera is out of the start area
         if(_transform.position.y > 1){
             bottomLeway = _bottomBound;
         }
 
+        //if the camera is out of the start area, it is clamped so the ball can go no lower than the platform lowest on the screen at the cam's max height
         if(_transform.position.y > 1){
             _transform.position = new Vector3(
                 _transform.position.x,
@@ -43,6 +43,7 @@ public class CameraMovement : MonoBehaviour
                     maxHeight - bottomLeway, 
                     _topObject.position.y - _topBound),
                 _transform.position.z);
+        //if the camera is in the starting area, it is clamped to a height of 1
         }else{
             _transform.position = new Vector3(
                 _transform.position.x,
