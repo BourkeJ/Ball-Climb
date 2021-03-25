@@ -29,12 +29,7 @@ public class BallFlick : MonoBehaviour
         //     Touch touch = Input.GetTouch(0);
         //     if (touch.phase == TouchPhase.Moved)
         //     {
-        //         Vector2 pos = touch.position;
-        //         pos.x = (pos.x - width) / width;
-        //         pos.y = (pos.y - height) / height;
-        //         position = new Vector3(-pos.x, pos.y, 0.0f);
-            
-        //         transform.position = position;
+
         //     }
         // }
 
@@ -58,10 +53,17 @@ public class BallFlick : MonoBehaviour
             }
         }else{
             Vector3 direction = new Vector3(_mousePosition1.x - _mousePosition0.x, _mousePosition1.y - _mousePosition0.y, 0);
-            print(_timeHeld * _thrust);
+            //print(_timeHeld * _thrust);
             _rigidBody.AddForce(direction * (2 - _timeHeld) * _thrust);
             _timeHeld = 0;
             _flicked = false;
         }
     }
+
+    // private void OnCollisionEnter(Collision collision){
+    //     if(collision.collider.tag == "wall"){
+    //         print("hit");
+    //         _rigidBody.velocity = Vector3.zero;
+    //     }
+    // }
 }
