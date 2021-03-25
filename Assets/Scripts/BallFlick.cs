@@ -13,6 +13,7 @@ public class BallFlick : MonoBehaviour
     private bool _flicked = false;
     private Rigidbody _rigidBody = null;
     private float _timeHeld = 0f;
+    private bool _flickable = true;
 
     void Awake()
     {
@@ -34,36 +35,44 @@ public class BallFlick : MonoBehaviour
         // }
 
         //mouse
-        if(_flicked == false){
-            if (Input.GetMouseButtonDown(0)) {
-                _mousePosition0 = Input.mousePosition;
-                _transform.GetComponent<Renderer>().material.color = Color.white;
-            } 
-            if(Input.GetMouseButton(0)) {
-                _timeHeld += Time.deltaTime;
-            }
+        if(_flickable == true){
+            if(_flicked == false){
+                if (Input.GetMouseButtonDown(0)) {
+                    _mousePosition0 = Input.mousePosition;
+                    _transform.GetComponent<Renderer>().material.color = Color.white;
+                } 
+                if(Input.GetMouseButton(0)) {
+                    _timeHeld += Time.deltaTime;
+                }
 
-            if (Input.GetMouseButtonUp(0)) {
-                _mousePosition1 = Input.mousePosition;
-                _transform.GetComponent<Renderer>().material.color = Color.black;
-                _flicked = true;
+                if (Input.GetMouseButtonUp(0)) {
+                    _mousePosition1 = Input.mousePosition;
+                    _transform.GetComponent<Renderer>().material.color = Color.black;
+                    _flicked = true;
+                }
+            }else{
+                Vector3 direction = new Vector3(
+                    _mousePosition1.x - _mousePosition0.x, 
+                    _mousePosition1.y - _mousePosition0.y, 
+                    0);
+                _rigidBody.AddForce(direction * (2 - _timeHeld) * _thrust);
+                print(direction * (2 - _timeHeld) * _thrust);
+                _timeHeld = 0;
+                _flicked = false;
             }
-        }else{
-            Vector3 direction = new Vector3(
-                _mousePosition1.x - _mousePosition0.x, 
-                _mousePosition1.y - _mousePosition0.y, 
-                0);
-            _rigidBody.AddForce(direction * (2 - _timeHeld) * _thrust);
-            print(direction * (2 - _timeHeld) * _thrust);
-            _timeHeld = 0;
-            _flicked = false;
         }
     }
 
-    // private void OnCollisionEnter(Collision collision){
+    private void OnTriggerEnter(Collider collision){
     //     if(collision.collider.tag == "wall"){
     //         print("hit");
     //         _rigidBody.velocity = Vector3.zero;
     //     }
-    // }
+        _flickable = true;
+        print(_flickable);
+    }
+    private void OnTriggerExit(Collider collision){
+        _flickable = false;
+        print(_flickable);
+    }
 }
