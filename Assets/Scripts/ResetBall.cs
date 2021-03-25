@@ -13,10 +13,14 @@ public class ResetBall : MonoBehaviour
         _startPos = _ballTrans.position;
     }
 
-    public void OnClick()
+    public void BallReset()
     {
         _ballRB.velocity = Vector3.zero;
         _ballRB.angularVelocity = Vector3.zero;
         _ballTrans.position =  _startPos;
+    }
+
+    public void OnTriggerEnter(Collider collider){
+        BallReset();
     }
 }
