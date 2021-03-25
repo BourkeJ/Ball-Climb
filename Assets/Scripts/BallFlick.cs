@@ -6,7 +6,7 @@ public class BallFlick : MonoBehaviour
 {
     //mouseTestVars
     [SerializeField] private float _thrust = 20f;
- 
+    
     private Transform _transform = null;
     private Vector2 _mousePosition0 = Vector2.zero;
     private Vector2 _mousePosition1 = Vector2.zero;
@@ -38,23 +38,23 @@ public class BallFlick : MonoBehaviour
             if (Input.GetMouseButtonDown(0)) {
                 _mousePosition0 = Input.mousePosition;
                 _transform.GetComponent<Renderer>().material.color = Color.white;
-                //print(_mousePosition0);
             } 
             if(Input.GetMouseButton(0)) {
                 _timeHeld += Time.deltaTime;
-                print(_timeHeld);
             }
 
             if (Input.GetMouseButtonUp(0)) {
                 _mousePosition1 = Input.mousePosition;
-                //print(_mousePosition1);
                 _transform.GetComponent<Renderer>().material.color = Color.black;
                 _flicked = true;
             }
         }else{
-            Vector3 direction = new Vector3(_mousePosition1.x - _mousePosition0.x, _mousePosition1.y - _mousePosition0.y, 0);
-            //print(_timeHeld * _thrust);
+            Vector3 direction = new Vector3(
+                _mousePosition1.x - _mousePosition0.x, 
+                _mousePosition1.y - _mousePosition0.y, 
+                0);
             _rigidBody.AddForce(direction * (2 - _timeHeld) * _thrust);
+            print(direction * (2 - _timeHeld) * _thrust);
             _timeHeld = 0;
             _flicked = false;
         }
