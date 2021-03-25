@@ -56,7 +56,6 @@ public class BallFlick : MonoBehaviour
                     _mousePosition1.y - _mousePosition0.y, 
                     0);
                 _rigidBody.AddForce(direction * (2 - _timeHeld) * _thrust);
-                print(direction * (2 - _timeHeld) * _thrust);
                 _timeHeld = 0;
                 _flicked = false;
             }
@@ -69,10 +68,8 @@ public class BallFlick : MonoBehaviour
     //         _rigidBody.velocity = Vector3.zero;
     //     }
         _flickable = true;
-        print(_flickable);
     }
     private void OnTriggerExit(Collider collision){
         _flickable = false;
-        print(_flickable);
     }
 }
