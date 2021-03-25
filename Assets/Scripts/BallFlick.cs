@@ -15,6 +15,9 @@ public class BallFlick : MonoBehaviour
     private float _timeHeld = 0f;
     private bool _flickable = true;
 
+    //vars for cam
+    //public float currentBottom = 1f;
+
     void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();
@@ -57,19 +60,28 @@ public class BallFlick : MonoBehaviour
                     0);
                 _rigidBody.AddForce(direction * (2 - _timeHeld) * _thrust);
                 _timeHeld = 0;
+                _mousePosition0 = Vector2.zero;
+                _mousePosition1 = Vector2.zero;
                 _flicked = false;
             }
         }
     }
 
     private void OnTriggerEnter(Collider collision){
-    //     if(collision.collider.tag == "wall"){
-    //         print("hit");
-    //         _rigidBody.velocity = Vector3.zero;
-    //     }
+        // if(collision.tag == "platform"){
+        //     currentBottom = collision.GetComponent<Transform>().position.y;
+        //     print(currentBottom);
+        // }
+
+
         _flickable = true;
     }
+
+
     private void OnTriggerExit(Collider collision){
         _flickable = false;
+        if(_mousePosition1 == Vector2.zero && _mousePosition0 != Vector2.zero){
+            _transform.GetComponent<Renderer>().material.color = Color.black;
+        }
     }
 }
