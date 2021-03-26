@@ -6,6 +6,7 @@ TagManager:
   tags:
   - wall
   - platform
+  - ouch
   layers:
   - Default
   - TransparentFX

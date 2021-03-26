@@ -5,7 +5,10 @@ using UnityEngine;
 public class BallFlick : MonoBehaviour
 {
     [SerializeField] private float _thrust = 20f;
-    
+    [SerializeField] private ResetBall _resetBall = null;
+    [SerializeField] private LineRenderer _aimLine = null;
+    [SerializeField] private Camera _camera = null;
+
     private Transform _transform = null;
     private Vector2 _mousePosition0 = Vector2.zero;
     private Vector2 _mousePosition1 = Vector2.zero;
@@ -30,11 +33,14 @@ public class BallFlick : MonoBehaviour
                 if (Input.GetMouseButtonDown(0)) {
                     _mousePosition0 = Input.mousePosition;
                     _transform.GetComponent<Renderer>().material.color = Color.white;
+                    //_aimLine.SetPosition(0, new Vector3(_mousePosition0.x/500, _mousePosition0.y/500, 0));
                 } 
 
                 //see how long player is holding down their tap
                 if(Input.GetMouseButton(0)) {
-                    _timeHeld += Time.deltaTime;
+                    //_timeHeld += Time.deltaTime;
+                    _aimLine.SetPosition(0, new Vector3(_transform.position.x, _transform.position.y, 0));
+                    _aimLine.SetPosition(1, new Vector3(Input.mousePosition.x/500, Input.mousePosition.y/500 , 0));
                 }
 
                 //get position of flick release and change color back to black
@@ -51,7 +57,7 @@ public class BallFlick : MonoBehaviour
                     _mousePosition1.x - _mousePosition0.x, 
                     _mousePosition1.y - _mousePosition0.y, 
                     0);
-                _rigidBody.AddForce(direction * (2 - _timeHeld) * _thrust);
+                _rigidBody.AddForce(direction * _thrust);
                 _timeHeld = 0;
                 _mousePosition0 = Vector2.zero;
                 _mousePosition1 = Vector2.zero;
@@ -62,6 +68,10 @@ public class BallFlick : MonoBehaviour
 
     //if the ball is touching a wall or platform, the player can flick
     private void OnTriggerEnter(Collider collision){
+        if(collision.tag == "ouch"){
+            _resetBall.BallReset();
+        }
+
         _flickable = true;
     }
 
