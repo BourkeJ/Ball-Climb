@@ -7,7 +7,7 @@ public class BallFlick : MonoBehaviour
     [SerializeField] private float _thrust = 20f;
     [SerializeField] private ResetBall _resetBall = null;
     [SerializeField] private LineRenderer _aimLine = null;
-    [SerializeField] private Camera _camera = null;
+    //[SerializeField] private Camera _camera = null;
 
     private Transform _transform = null;
     private Vector2 _mousePosition0 = Vector2.zero;
