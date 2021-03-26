@@ -39,8 +39,14 @@ public class BallFlick : MonoBehaviour
                 //see how long player is holding down their tap
                 if(Input.GetMouseButton(0)) {
                     //_timeHeld += Time.deltaTime;
-                    _aimLine.SetPosition(0, new Vector3(_transform.position.x, _transform.position.y, 0));
-                    _aimLine.SetPosition(1, new Vector3(Input.mousePosition.x/500, Input.mousePosition.y/500 , 0));
+
+                    Vector3 direction = new Vector2(
+                        Input.mousePosition.x - _mousePosition0.x, 
+                        Input.mousePosition.y - _mousePosition0.y
+                    );
+
+                    _aimLine.SetPosition(0, new Vector3 (transform.position.x, transform.position.y, -0.5f));
+                    _aimLine.SetPosition(1, new Vector3(_transform.position.x + (direction.x / 500), _transform.position.y + (direction.y / 500), -0.5f));
                 }
 
                 //get position of flick release and change color back to black
@@ -53,14 +59,16 @@ public class BallFlick : MonoBehaviour
             //once flicked, the ball uses the flick positions as a vector and adds force in that direction
             //once force has been added, flick vars are reset
             }else{
-                Vector3 direction = new Vector3(
+                Vector2 direction = new Vector2(
                     _mousePosition1.x - _mousePosition0.x, 
-                    _mousePosition1.y - _mousePosition0.y, 
-                    0);
+                    _mousePosition1.y - _mousePosition0.y 
+                );
                 _rigidBody.AddForce(direction * _thrust);
                 //_timeHeld = 0;
                 _mousePosition0 = Vector2.zero;
                 _mousePosition1 = Vector2.zero;
+                _aimLine.SetPosition(0, Vector3.zero);
+                _aimLine.SetPosition(1, Vector3.zero);
                 _flicked = false;
             }
         }
