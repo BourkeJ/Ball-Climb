@@ -24,7 +24,6 @@ public class WinZone : MonoBehaviour
     void Update(){
         if(_youWin.activeSelf == true){
             _timeWait -= Time.deltaTime;
-            print(_timeWait);
             if(_timeWait<= 0f){
                 SceneSwitch();
             }
