@@ -14,7 +14,7 @@ public class BallFlick : MonoBehaviour
     private Vector2 _mousePosition1 = Vector2.zero;
     private bool _flicked = false;
     private Rigidbody _rigidBody = null;
-    private float _timeHeld = 0f;
+    //private float _timeHeld = 0f;
     private bool _flickable = true;
 
 
@@ -58,7 +58,7 @@ public class BallFlick : MonoBehaviour
                     _mousePosition1.y - _mousePosition0.y, 
                     0);
                 _rigidBody.AddForce(direction * _thrust);
-                _timeHeld = 0;
+                //_timeHeld = 0;
                 _mousePosition0 = Vector2.zero;
                 _mousePosition1 = Vector2.zero;
                 _flicked = false;
